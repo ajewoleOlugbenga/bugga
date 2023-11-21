@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Js learning</title>
+</head>
+<body>
+    <div id="container"></div>
+<script type="module">
+    import * as THREE from "./three.module.js"
+
+    // scene
+    var scene = new THREE.Scene();
+
+    //camera
+    var width = 200;
+    var height = 200;
+    var viewAngle = 45;
+    var nearClipping = 0.1;
+    var farClipping = 9999;
+
+    var camera = new THREE.PerspectiveCamera(viewAngle, width/height,nearClipping,farClipping);
+    camera.position.set(1,0,10)
+
+    //Geometry + material = mesh
+
+    //Box Geometry
+    var cubeGeometry = new THREE.BoxGeometry(2,2,2);
+    // the cube material
+    var cubeMaterial = new THREE.MeshBasicMaterial({color: "green"})
+
+    // geometry and metrail to make Mesh
+    var cube = new THREE.Mesh(cubeGeometry,cubeMaterial)
+
+    cube.position.set(0,0,0)
+    scene.add(cube)
+
+    //renderer
+    var renderer = new THREE.WebGLRenderer({antialias: true, alpha: true})
+    renderer.setSize(width,height);
+
+
+    //Js to get Element 
+    var element = document.getElementById("container")
+    element.appendChild(renderer.domElement);
+
+    const animate = () =>{
+        cube.rotation.y +=0.01
+        cube.rotation.x +=0.01
+        requestAnimationFrame(animate)
+        renderer.render(scene,camera)
+    }
+
+    animate();
+
+</script>
+</body>
+</html>
